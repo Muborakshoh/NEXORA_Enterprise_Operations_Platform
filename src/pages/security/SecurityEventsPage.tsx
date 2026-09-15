@@ -4,7 +4,7 @@
  * Displays and manages security events.
  */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Search, Filter, Download, CheckCircle } from 'lucide-react';
 import { useSecurity } from '../../app/providers/SecurityProvider';
 import { SecurityEventCard } from '../../shared/components/security';

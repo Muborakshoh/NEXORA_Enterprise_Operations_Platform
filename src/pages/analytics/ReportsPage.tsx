@@ -4,7 +4,7 @@
  * Displays and manages analytics reports.
  */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Plus, Search } from 'lucide-react';
 import { useAnalytics } from '../../app/providers/AnalyticsProvider';
 import { ReportCard } from '../../shared/components/analytics';

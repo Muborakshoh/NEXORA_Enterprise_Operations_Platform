@@ -4,7 +4,7 @@
  * Displays and manages suspicious activities.
  */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Search, Shield } from 'lucide-react';
 import { useSecurity } from '../../app/providers/SecurityProvider';
 import { SuspiciousActivityCard } from '../../shared/components/security';

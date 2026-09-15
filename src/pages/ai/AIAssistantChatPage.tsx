@@ -4,7 +4,7 @@
  * Chat interface for AI assistants.
  */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Send, Bot, User } from 'lucide-react';
 import { useAI } from '../../app/providers/AIProvider';
 import { Button, Input } from '../../shared/components/ui';

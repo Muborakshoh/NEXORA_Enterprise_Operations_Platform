@@ -4,7 +4,7 @@
  * View and manage AI-generated recommendations.
  */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Search, Lightbulb, RefreshCw } from 'lucide-react';
 import { useAI } from '../../app/providers/AIProvider';
 import { RecommendationCard } from '../../shared/components/ai';

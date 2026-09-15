@@ -4,7 +4,7 @@
  * Displays and manages audit logs.
  */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Search, Download } from 'lucide-react';
 import { useSecurity } from '../../app/providers/SecurityProvider';
 import { AuditLogRow } from '../../shared/components/security';

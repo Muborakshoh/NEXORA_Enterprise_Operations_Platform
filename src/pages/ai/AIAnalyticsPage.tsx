@@ -4,7 +4,7 @@
  * Manage AI-powered analytics and insights.
  */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Plus, Search } from 'lucide-react';
 import { useAI } from '../../app/providers/AIProvider';
 import { AnalyticsCard } from '../../shared/components/ai';

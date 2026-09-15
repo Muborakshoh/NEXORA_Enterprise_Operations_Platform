@@ -4,7 +4,7 @@
  * Manage AI tools and execute them.
  */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Plus, Search } from 'lucide-react';
 import { useAI } from '../../app/providers/AIProvider';
 import { ToolCard } from '../../shared/components/ai';

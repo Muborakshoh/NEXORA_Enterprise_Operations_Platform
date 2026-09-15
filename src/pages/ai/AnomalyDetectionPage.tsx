@@ -4,7 +4,7 @@
  * Manage anomaly detectors and view detected anomalies.
  */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Plus, Search, AlertTriangle } from 'lucide-react';
 import { useAI } from '../../app/providers/AIProvider';
 import { AnomalyDetectorCard, AnomalyCard } from '../../shared/components/ai';

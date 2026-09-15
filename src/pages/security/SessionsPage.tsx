@@ -4,7 +4,7 @@
  * Displays and manages user sessions.
  */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Search, LogOut } from 'lucide-react';
 import { useSecurity } from '../../app/providers/SecurityProvider';
 import { SessionCard } from '../../shared/components/security';

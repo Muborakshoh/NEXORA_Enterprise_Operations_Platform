@@ -4,7 +4,7 @@
  * Displays and manages analytics dashboards.
  */
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Plus, Search } from 'lucide-react';
 import { useAnalytics } from '../../app/providers/AnalyticsProvider';
 import { DashboardCard } from '../../shared/components/analytics';
