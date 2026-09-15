@@ -5,7 +5,7 @@
  */
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -80,6 +80,13 @@ export function LoginPage() {
 
         <p className="text-center text-xs text-text-muted mt-6">
           Demo: Use any email and password to sign in
+        </p>
+
+        <p className="text-center text-sm text-text-muted mt-4">
+          Don't have an account?{' '}
+          <Link to="/register" className="text-accent-500 hover:text-accent-600 font-medium">
+            Sign up
+          </Link>
         </p>
       </div>
     </div>

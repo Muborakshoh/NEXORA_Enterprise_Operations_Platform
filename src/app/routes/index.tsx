@@ -9,6 +9,7 @@ import { createBrowserRouter, Outlet, Navigate } from 'react-router-dom';
 import { AppLayout } from '../../layouts/AppLayout';
 import { DashboardPage } from '../../pages/DashboardPage';
 import { LoginPage } from '../../pages/LoginPage';
+import { RegisterPage } from '../../pages/RegisterPage';
 import { SecurityEventsPage } from '../../pages/security/SecurityEventsPage';
 import { AuditPage } from '../../pages/security/AuditPage';
 import { SessionsPage } from '../../pages/security/SessionsPage';
@@ -31,6 +32,7 @@ export const router = createBrowserRouter([
     children: [
       // Auth (public)
       { path: '/login', element: <LoginPage /> },
+      { path: '/register', element: <RegisterPage /> },
 
       // Overview (protected)
       {
