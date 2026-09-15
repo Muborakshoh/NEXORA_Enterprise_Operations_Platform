@@ -42,6 +42,23 @@ export function AppLayout({ children }: AppLayoutProps) {
                 </a>
               </div>
             </div>
+            <div className="pt-4">
+              <p className="px-3 text-xs font-semibold text-text-muted uppercase tracking-wider">Analytics</p>
+              <div className="mt-2 space-y-1">
+                <a href="/analytics/dashboards" className="flex items-center px-3 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg">
+                  Dashboards
+                </a>
+                <a href="/analytics/reports" className="flex items-center px-3 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg">
+                  Reports
+                </a>
+                <a href="/analytics/exports" className="flex items-center px-3 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg">
+                  Exports
+                </a>
+                <a href="/analytics/aggregations" className="flex items-center px-3 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg">
+                  Aggregations
+                </a>
+              </div>
+            </div>
           </div>
         </nav>
       </aside>

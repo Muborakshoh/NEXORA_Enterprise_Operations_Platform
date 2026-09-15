@@ -11,12 +11,15 @@
 import React from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { SecurityProvider } from './app/providers/SecurityProvider';
+import { AnalyticsProvider } from './app/providers/AnalyticsProvider';
 import { router } from './app/routes';
 
 export default function App() {
   return (
     <SecurityProvider>
-      <RouterProvider router={router} />
+      <AnalyticsProvider>
+        <RouterProvider router={router} />
+      </AnalyticsProvider>
     </SecurityProvider>
   );
 }

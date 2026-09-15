@@ -11,6 +11,7 @@ The core layer contains business logic, types, and API clients.
 
 #### Types (`src/core/types/`)
 - **security.ts**: Security events, audit logs, sessions, suspicious activities
+- **analytics.ts**: Dashboards, reports, exports, aggregations, data sources
 - **infrastructure.ts**: Servers, services, Docker, alerts
 - **inventory.ts**: Products, warehouses, suppliers, stock
 - **finance.ts**: Accounts, transactions, invoices, payments
@@ -22,6 +23,7 @@ The core layer contains business logic, types, and API clients.
 #### API Clients (`src/core/api/`)
 - **client.ts**: Base HTTP client with authentication
 - **security.ts**: Security module API
+- **analytics.ts**: Analytics module API
 - **infrastructure.ts**: Infrastructure module API
 - **inventory.ts**: Inventory module API
 - **finance.ts**: Finance module API
@@ -40,6 +42,7 @@ The application layer manages global state and cross-cutting concerns.
 
 #### Providers (`src/app/providers/`)
 - **SecurityProvider**: Security events, audit, sessions, suspicious activity
+- **AnalyticsProvider**: Dashboards, reports, exports, aggregations, data sources
 - **InfrastructureProvider**: Servers, services, containers, alerts
 - **InventoryProvider**: Products, warehouses, stock, movements
 - **FinanceProvider**: Accounts, transactions, invoices, payments

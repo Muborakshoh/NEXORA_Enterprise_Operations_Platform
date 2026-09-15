@@ -13,6 +13,10 @@ import { SecurityEventsPage } from '../../pages/security/SecurityEventsPage';
 import { AuditPage } from '../../pages/security/AuditPage';
 import { SessionsPage } from '../../pages/security/SessionsPage';
 import { SuspiciousActivityPage } from '../../pages/security/SuspiciousActivityPage';
+import { DashboardsPage } from '../../pages/analytics/DashboardsPage';
+import { ReportsPage } from '../../pages/analytics/ReportsPage';
+import { ExportsPage } from '../../pages/analytics/ExportsPage';
+import { AggregationsPage } from '../../pages/analytics/AggregationsPage';
 import { PlaceholderPage } from '../../pages/PlaceholderPage';
 import { ProtectedRoute } from '../../shared/components/ProtectedRoute';
 
@@ -100,11 +104,44 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      // Analytics (protected)
       {
-        path: '/analytics/*',
+        path: '/analytics/dashboards',
         element: (
           <ProtectedRoute>
-            <PlaceholderPage title="Analytics" module="Analytics" />
+            <DashboardsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/analytics/reports',
+        element: (
+          <ProtectedRoute>
+            <ReportsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/analytics/exports',
+        element: (
+          <ProtectedRoute>
+            <ExportsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/analytics/aggregations',
+        element: (
+          <ProtectedRoute>
+            <AggregationsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/analytics',
+        element: (
+          <ProtectedRoute>
+            <DashboardsPage />
           </ProtectedRoute>
         ),
       },

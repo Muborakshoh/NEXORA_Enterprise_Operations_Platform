@@ -20,6 +20,13 @@ NEXORA is a comprehensive enterprise platform that integrates business operation
 - **Suspicious Activity** - Intelligent threat detection
 - **Security Rules** - Configurable automation
 
+### Phase 11: Analytics Module ✅
+- **Dashboards** - Custom analytics dashboards with widgets
+- **Reports** - Scheduled and on-demand report generation
+- **Exports** - Multi-format data export with download management
+- **Aggregations** - Powerful data aggregation with multiple types
+- **Data Sources** - Unified access to all data sources
+
 ## 📊 Module Overview
 
 ### Business Module
@@ -38,6 +45,13 @@ NEXORA is a comprehensive enterprise platform that integrates business operation
 - **Audit Log**: Track all system changes and activities
 - **Sessions**: Manage active user sessions
 - **Suspicious Activity**: Detect and investigate threats
+
+### Analytics Module
+- **Dashboards**: Custom analytics dashboards with widgets and layouts
+- **Reports**: Scheduled and on-demand report generation with multiple formats
+- **Exports**: Data export in CSV, Excel, PDF, JSON, XML formats
+- **Aggregations**: Data aggregation with sum, avg, count, min, max, group_by
+- **Data Sources**: Unified access to all data sources
 
 ## 🏗️ Architecture
 
@@ -171,15 +185,10 @@ VITE_WS_URL=ws://localhost:6001
 ## 📚 Documentation
 
 - [Phase 10: Security Module](./PHASE_10_SECURITY.md) - Detailed security module documentation
+- [Phase 11: Analytics Module](./PHASE_11_ANALYTICS.md) - Detailed analytics module documentation
 - [Architecture](./ARCHITECTURE.md) - System architecture overview
 
 ## 🔮 Future Phases
-
-### Phase 11: Analytics
-- Custom dashboards
-- Advanced reporting
-- Data visualization
-- Scheduled reports
 
 ### Phase 12: AI Intelligence
 - Predictive analytics
