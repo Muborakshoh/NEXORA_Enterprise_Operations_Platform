@@ -7,7 +7,7 @@ NEXORA follows a clean architecture pattern with clear separation of concerns, t
 ## Architecture Layers
 
 ### 1. Core Layer (`src/core/`)
-The core layer contains business logic, types, and API clients.
+The core layer contains business logic, types, API clients, and utilities.
 
 #### Types (`src/core/types/`)
 - **security.ts**: Security events, audit logs, sessions, suspicious activities
@@ -33,6 +33,12 @@ The core layer contains business logic, types, and API clients.
 - **organization.ts**: Organization API
 - **dashboard.ts**: Dashboard API
 - **identity.ts**: Identity API
+
+#### Utilities (`src/core/utils/`)
+- **performance.ts**: Performance optimization (debouncing, throttling, virtual scrolling, caching)
+- **security.ts**: Security hardening (CSP, rate limiting, CSRF, sanitization, audit logging)
+- **observability.ts**: Monitoring and tracing (logging, metrics, distributed tracing, error tracking)
+- **backup.ts**: Backup and recovery (backup manager, recovery points, data migration, integrity checks)
 
 #### Configuration (`src/core/config/`)
 - Centralized configuration management
