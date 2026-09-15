@@ -1,0 +1,125 @@
+version: '3.8'
+
+services:
+  # PHP Application
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: nexora-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+      - ./backend/storage:/var/www/storage
+    networks:
+      - nexora-network
+    depends_on:
+      - postgres
+      - redis
+      - rabbitmq
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+
+  # Nginx Server
+  nginx:
+    image: nginx:alpine
+    container_name: nexora-nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend:/var/www
+      - ./backend/docker/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - nexora-network
+    depends_on:
+      - app
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: nexora-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: nexora
+      POSTGRES_USER: nexora
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - nexora-network
+
+  # Redis Cache
+  redis:
+    image: redis:alpine
+    container_name: nexora-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - nexora-network
+
+  # RabbitMQ Message Broker
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: nexora-rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    networks:
+      - nexora-network
+
+  # Queue Worker
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: nexora-worker
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+    networks:
+      - nexora-network
+    depends_on:
+      - app
+      - redis
+      - rabbitmq
+    command: php artisan queue:work --tries=3 --timeout=90
+
+  # Scheduler
+  scheduler:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: nexora-scheduler
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./backend:/var/www
+    networks:
+      - nexora-network
+    depends_on:
+      - app
+    command: php artisan schedule:work
+
+networks:
+  nexora-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  redis-data:
+  rabbitmq-data:
