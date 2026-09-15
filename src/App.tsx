@@ -12,13 +12,16 @@ import React from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { SecurityProvider } from './app/providers/SecurityProvider';
 import { AnalyticsProvider } from './app/providers/AnalyticsProvider';
+import { AIProvider } from './app/providers/AIProvider';
 import { router } from './app/routes';
 
 export default function App() {
   return (
     <SecurityProvider>
       <AnalyticsProvider>
-        <RouterProvider router={router} />
+        <AIProvider>
+          <RouterProvider router={router} />
+        </AIProvider>
       </AnalyticsProvider>
     </SecurityProvider>
   );

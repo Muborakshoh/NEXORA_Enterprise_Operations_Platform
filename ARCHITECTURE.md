@@ -12,6 +12,7 @@ The core layer contains business logic, types, and API clients.
 #### Types (`src/core/types/`)
 - **security.ts**: Security events, audit logs, sessions, suspicious activities
 - **analytics.ts**: Dashboards, reports, exports, aggregations, data sources
+- **ai.ts**: AI assistants, tools, analytics, anomaly detection, recommendations
 - **infrastructure.ts**: Servers, services, Docker, alerts
 - **inventory.ts**: Products, warehouses, suppliers, stock
 - **finance.ts**: Accounts, transactions, invoices, payments
@@ -24,6 +25,7 @@ The core layer contains business logic, types, and API clients.
 - **client.ts**: Base HTTP client with authentication
 - **security.ts**: Security module API
 - **analytics.ts**: Analytics module API
+- **ai.ts**: AI module API
 - **infrastructure.ts**: Infrastructure module API
 - **inventory.ts**: Inventory module API
 - **finance.ts**: Finance module API
@@ -43,6 +45,7 @@ The application layer manages global state and cross-cutting concerns.
 #### Providers (`src/app/providers/`)
 - **SecurityProvider**: Security events, audit, sessions, suspicious activity
 - **AnalyticsProvider**: Dashboards, reports, exports, aggregations, data sources
+- **AIProvider**: AI assistants, tools, analytics, anomaly detection, recommendations
 - **InfrastructureProvider**: Servers, services, containers, alerts
 - **InventoryProvider**: Products, warehouses, stock, movements
 - **FinanceProvider**: Accounts, transactions, invoices, payments
@@ -208,6 +211,104 @@ Each module is self-contained with:
 - Organization-scoped data
 - Tenant isolation
 - Shared resources where appropriate
+
+## AI Module
+
+### Architecture
+
+```
+AIProvider
+  ↓
+AI API (REST)
+  ↓
+Assistants, Tools, Analytics, Anomaly Detection, Recommendations
+  ↓
+UI Components (Cards, Chat, Modals)
+```
+
+### AI Components
+
+**AssistantCard**
+- Assistant name and model
+- Capabilities display
+- Active/inactive status
+- Chat, edit, delete actions
+
+**ToolCard**
+- Tool name and category
+- Description and parameters
+- Enabled/disabled status
+- Execute, edit, delete actions
+
+**AnalyticsCard**
+- Analytics name and type
+- Data source and schedule
+- Last run timestamp
+- Run, toggle schedule, edit, delete actions
+
+**AnomalyDetectorCard**
+- Detector name and algorithm
+- Data source and metric
+- Sensitivity level
+- Toggle, edit, delete actions
+
+**AnomalyCard**
+- Anomaly value and expected value
+- Deviation percentage
+- Severity and status
+- Investigate, resolve, false positive actions
+
+**RecommendationCard**
+- Recommendation title and description
+- Impact and confidence
+- Category and type
+- Accept, reject, mark implemented actions
+
+### AI Provider
+
+Manages:
+- AI assistants with chat functionality
+- AI tools with execution
+- AI analytics with insights
+- Anomaly detectors and anomalies
+- Recommendations with workflow
+- AI statistics
+
+### AI Features
+
+**AI Assistants**
+- Multiple AI models (GPT-4, GPT-3.5, Claude, Gemini)
+- Conversation management
+- Tool integration
+- Custom system prompts
+
+**AI Tools**
+- Controlled execution
+- Parameter validation
+- Execution history
+- Multiple categories
+
+**AI Analytics**
+- Trend analysis
+- Pattern detection
+- Correlation analysis
+- Forecasting
+- Segmentation
+- Clustering
+
+**Anomaly Detection**
+- Multiple algorithms (statistical, ML, time series, isolation forest, autoencoder)
+- Configurable sensitivity
+- Real-time detection
+- Workflow management
+
+**Recommendations**
+- AI-generated insights
+- Impact and confidence scoring
+- Accept/reject workflow
+- Implementation tracking
+
+---
 
 ## Testing Strategy
 

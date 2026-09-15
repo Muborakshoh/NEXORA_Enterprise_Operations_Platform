@@ -278,6 +278,12 @@ src/
 - Export functionality
 - Scheduled reports
 
+## Documentation
+
+- ✅ README.md — updated with Phase 10
+- ✅ ARCHITECTURE.md — added Security Module section
+- ✅ PHASE_10_SECURITY.md — full implementation description
+
 ## Summary
 
 Phase 10 provides a production-ready Security module with:

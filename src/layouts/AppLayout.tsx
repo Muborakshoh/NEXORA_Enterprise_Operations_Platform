@@ -59,6 +59,26 @@ export function AppLayout({ children }: AppLayoutProps) {
                 </a>
               </div>
             </div>
+            <div className="pt-4">
+              <p className="px-3 text-xs font-semibold text-text-muted uppercase tracking-wider">AI</p>
+              <div className="mt-2 space-y-1">
+                <a href="/ai/assistant" className="flex items-center px-3 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg">
+                  AI Assistant
+                </a>
+                <a href="/ai/tools" className="flex items-center px-3 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg">
+                  Tools
+                </a>
+                <a href="/ai/analytics" className="flex items-center px-3 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg">
+                  AI Analytics
+                </a>
+                <a href="/ai/anomaly-detection" className="flex items-center px-3 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg">
+                  Anomaly Detection
+                </a>
+                <a href="/ai/recommendations" className="flex items-center px-3 py-2 text-sm text-text-secondary hover:text-text-primary hover:bg-surface-2 rounded-lg">
+                  Recommendations
+                </a>
+              </div>
+            </div>
           </div>
         </nav>
       </aside>

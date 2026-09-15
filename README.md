@@ -27,6 +27,13 @@ NEXORA is a comprehensive enterprise platform that integrates business operation
 - **Aggregations** - Powerful data aggregation with multiple types
 - **Data Sources** - Unified access to all data sources
 
+### Phase 12: AI Module ✅
+- **AI Assistant** - Multi-model AI chat with conversation management
+- **AI Tools** - Controlled tool execution with parameter validation
+- **AI Analytics** - AI-powered analytics with insights and visualizations
+- **Anomaly Detection** - Real-time anomaly detection with workflow management
+- **Recommendations** - AI-generated recommendations with accept/reject workflow
+
 ## 📊 Module Overview
 
 ### Business Module
@@ -52,6 +59,13 @@ NEXORA is a comprehensive enterprise platform that integrates business operation
 - **Exports**: Data export in CSV, Excel, PDF, JSON, XML formats
 - **Aggregations**: Data aggregation with sum, avg, count, min, max, group_by
 - **Data Sources**: Unified access to all data sources
+
+### AI Module
+- **AI Assistant**: Multi-model AI chat (GPT-4, Claude, Gemini) with conversation management
+- **AI Tools**: Controlled tool execution with parameter validation and execution history
+- **AI Analytics**: AI-powered analytics with trend analysis, pattern detection, forecasting
+- **Anomaly Detection**: Real-time anomaly detection with multiple algorithms and workflow management
+- **Recommendations**: AI-generated recommendations with impact scoring and accept/reject workflow
 
 ## 🏗️ Architecture
 
@@ -190,17 +204,12 @@ VITE_WS_URL=ws://localhost:6001
 
 ## 🔮 Future Phases
 
-### Phase 12: AI Intelligence
-- Predictive analytics
-- Anomaly detection
-- Automated recommendations
-- Natural language queries
-
 ### Phase 13: Production Hardening
 - Performance optimization
 - Security hardening
 - Observability improvements
 - Disaster recovery
+- Documentation completion
 
 ## 🤝 Contributing
 

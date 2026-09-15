@@ -17,6 +17,11 @@ import { DashboardsPage } from '../../pages/analytics/DashboardsPage';
 import { ReportsPage } from '../../pages/analytics/ReportsPage';
 import { ExportsPage } from '../../pages/analytics/ExportsPage';
 import { AggregationsPage } from '../../pages/analytics/AggregationsPage';
+import { AIAssistantChatPage } from '../../pages/ai/AIAssistantChatPage';
+import { AIToolsPage } from '../../pages/ai/AIToolsPage';
+import { AIAnalyticsPage } from '../../pages/ai/AIAnalyticsPage';
+import { AnomalyDetectionPage } from '../../pages/ai/AnomalyDetectionPage';
+import { RecommendationsPage } from '../../pages/ai/RecommendationsPage';
 import { PlaceholderPage } from '../../pages/PlaceholderPage';
 import { ProtectedRoute } from '../../shared/components/ProtectedRoute';
 
@@ -145,11 +150,52 @@ export const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      // AI (protected)
       {
-        path: '/ai/*',
+        path: '/ai/assistant',
         element: (
           <ProtectedRoute>
-            <PlaceholderPage title="AI Intelligence" module="AI" />
+            <AIAssistantChatPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/ai/tools',
+        element: (
+          <ProtectedRoute>
+            <AIToolsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/ai/analytics',
+        element: (
+          <ProtectedRoute>
+            <AIAnalyticsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/ai/anomaly-detection',
+        element: (
+          <ProtectedRoute>
+            <AnomalyDetectionPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/ai/recommendations',
+        element: (
+          <ProtectedRoute>
+            <RecommendationsPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: '/ai',
+        element: (
+          <ProtectedRoute>
+            <AIAssistantChatPage />
           </ProtectedRoute>
         ),
       },
