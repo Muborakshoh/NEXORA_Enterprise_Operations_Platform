@@ -41,8 +41,14 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('cascade');
-            $table->foreign('parent_id')->references('id')->on('transaction_categories')->onDelete('cascade');
         });
+
+	Schema::table('transaction_categories', function (Blueprint $table) {
+   	    $table->foreign('parent_id')
+        	->references('id')
+        	->on('transaction_categories')
+        	->onDelete('cascade');
+	});
 
         // Transactions
         Schema::create('transactions', function (Blueprint $table) {

@@ -2,6 +2,7 @@ FROM php:8.4-fpm-alpine
 
 # Install system dependencies
 RUN apk add --no-cache \
+    $PHPIZE_DEPS \
     postgresql-dev \
     libzip-dev \
     zip \
@@ -12,7 +13,8 @@ RUN apk add --no-cache \
     libjpeg-turbo-dev \
     freetype-dev \
     oniguruma-dev \
-    libxml2-dev
+    libxml2-dev \
+    linux-headers
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \

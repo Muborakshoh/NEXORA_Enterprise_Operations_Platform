@@ -20,8 +20,14 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('cascade');
-            $table->foreign('parent_id')->references('id')->on('product_categories')->onDelete('cascade');
         });
+
+	Schema::table('product_categories', function (Blueprint $table) {
+   	    $table->foreign('parent_id')
+        	  ->references('id')
+        	  ->on('product_categories')
+        	  ->onDelete('cascade');
+	});
 
         // Products
         Schema::create('products', function (Blueprint $table) {

@@ -1,5 +1,42 @@
+# Node.js / Frontend
 node_modules/
 .next/
 dist/
 build/
+
+# Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Laravel
+backend/vendor/
+
+backend/storage/*
+backend/storage/**/
+backend/storage/**/.gitignore
+
+backend/bootstrap/cache/*
+backend/bootstrap/cache/.gitignore
+
+# Temporary Laravel project
+laravel-temp/
+
+# Backups
+backend.backup/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
