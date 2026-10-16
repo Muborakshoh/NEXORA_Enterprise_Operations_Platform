@@ -6,6 +6,7 @@
 
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { apiClient, tokenManager, getErrorMessage } from '../core/api/client';
 
 export function LoginPage() {
   const navigate = useNavigate();
@@ -19,11 +20,19 @@ export function LoginPage() {
     setIsLoading(true);
     setError('');
 
-    // Mock login - in real app this would call the API
-    setTimeout(() => {
-      localStorage.setItem('nexora_auth_token', 'mock-token');
+    try {
+      const data = await apiClient.post<{ user: unknown; token: string }>('/auth/login', {
+        email,
+        password,
+      });
+      tokenManager.setAccessToken(data.token);
+      localStorage.setItem('nexora_user', JSON.stringify(data.user));
       navigate('/');
-    }, 1000);
+    } catch (err) {
+      setError(getErrorMessage(err));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -79,7 +88,7 @@ export function LoginPage() {
         </form>
 
         <p className="text-center text-xs text-text-muted mt-6">
-          Demo: Use any email and password to sign in
+          Session ends automatically after a period of inactivity
         </p>
 
         <p className="text-center text-sm text-text-muted mt-4">

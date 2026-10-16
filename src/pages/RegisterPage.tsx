@@ -7,6 +7,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
+import { apiClient, tokenManager, getErrorMessage } from '../core/api/client';
 
 export function RegisterPage() {
   const navigate = useNavigate();
@@ -71,24 +72,21 @@ export function RegisterPage() {
     setIsLoading(true);
 
     try {
-      // Mock registration - in real app this would call the API
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
-      // Store user data
-      const userData = {
-        id: 'user-' + Date.now(),
+      const data = await apiClient.post<{ user: unknown; token: string }>('/auth/register', {
         name: formData.name,
         email: formData.email,
-        organization: formData.organizationName,
-      };
+        password: formData.password,
+        password_confirmation: formData.confirmPassword,
+        organization_name: formData.organizationName,
+      });
 
-      localStorage.setItem('nexora_user', JSON.stringify(userData));
-      localStorage.setItem('nexora_auth_token', 'mock-token-' + Date.now());
+      tokenManager.setAccessToken(data.token);
+      localStorage.setItem('nexora_user', JSON.stringify(data.user));
 
       // Redirect to dashboard
       navigate('/');
     } catch (err) {
-      setError('Registration failed. Please try again.');
+      setError(getErrorMessage(err));
     } finally {
       setIsLoading(false);
     }

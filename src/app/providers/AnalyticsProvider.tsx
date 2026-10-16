@@ -4,7 +4,7 @@
  * Context provider for Analytics module state management.
  */
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode, useCallback } from 'react';
 import { 
   dashboardsApi, 
   reportsApi, 
@@ -148,7 +148,7 @@ export function AnalyticsProvider({ children }: AnalyticsProviderProps) {
   const [isLoadingStats, setIsLoadingStats] = useState(false);
 
   // Dashboards methods
-  const loadDashboards = async (filters?: DashboardFilters) => {
+  const loadDashboards = useCallback(async (filters?: DashboardFilters) => {
     setIsLoadingDashboards(true);
     try {
       const response = await dashboardsApi.list(filters);
@@ -157,7 +157,7 @@ export function AnalyticsProvider({ children }: AnalyticsProviderProps) {
     } finally {
       setIsLoadingDashboards(false);
     }
-  };
+  }, []);
 
   const createDashboard = async (data: CreateDashboardRequest) => {
     const dashboard = await dashboardsApi.create(data);
@@ -188,7 +188,7 @@ export function AnalyticsProvider({ children }: AnalyticsProviderProps) {
   };
 
   // Reports methods
-  const loadReports = async (filters?: ReportFilters) => {
+  const loadReports = useCallback(async (filters?: ReportFilters) => {
     setIsLoadingReports(true);
     try {
       const response = await reportsApi.list(filters);
@@ -197,7 +197,7 @@ export function AnalyticsProvider({ children }: AnalyticsProviderProps) {
     } finally {
       setIsLoadingReports(false);
     }
-  };
+  }, []);
 
   const createReport = async (data: CreateReportRequest) => {
     const report = await reportsApi.create(data);
@@ -229,7 +229,7 @@ export function AnalyticsProvider({ children }: AnalyticsProviderProps) {
   };
 
   // Exports methods
-  const loadExports = async (filters?: ExportFilters) => {
+  const loadExports = useCallback(async (filters?: ExportFilters) => {
     setIsLoadingExports(true);
     try {
       const response = await exportsApi.list(filters);
@@ -238,7 +238,7 @@ export function AnalyticsProvider({ children }: AnalyticsProviderProps) {
     } finally {
       setIsLoadingExports(false);
     }
-  };
+  }, []);
 
   const createExport = async (data: CreateExportRequest) => {
     const exportData = await exportsApi.create(data);
@@ -258,7 +258,7 @@ export function AnalyticsProvider({ children }: AnalyticsProviderProps) {
   };
 
   // Aggregations methods
-  const loadAggregations = async (filters?: AggregationFilters) => {
+  const loadAggregations = useCallback(async (filters?: AggregationFilters) => {
     setIsLoadingAggregations(true);
     try {
       const response = await aggregationsApi.list(filters);
@@ -267,7 +267,7 @@ export function AnalyticsProvider({ children }: AnalyticsProviderProps) {
     } finally {
       setIsLoadingAggregations(false);
     }
-  };
+  }, []);
 
   const createAggregation = async (data: CreateAggregationRequest) => {
     const aggregation = await aggregationsApi.create(data);
@@ -293,7 +293,7 @@ export function AnalyticsProvider({ children }: AnalyticsProviderProps) {
   };
 
   // Data Sources methods
-  const loadDataSources = async () => {
+  const loadDataSources = useCallback(async () => {
     setIsLoadingDataSources(true);
     try {
       const response = await dataSourcesApi.list();
@@ -301,10 +301,10 @@ export function AnalyticsProvider({ children }: AnalyticsProviderProps) {
     } finally {
       setIsLoadingDataSources(false);
     }
-  };
+  }, []);
 
   // Statistics methods
-  const loadAnalyticsStats = async () => {
+  const loadAnalyticsStats = useCallback(async () => {
     setIsLoadingStats(true);
     try {
       const stats = await analyticsStatsApi.get();
@@ -312,7 +312,7 @@ export function AnalyticsProvider({ children }: AnalyticsProviderProps) {
     } finally {
       setIsLoadingStats(false);
     }
-  };
+  }, []);
 
   const value: AnalyticsContextType = {
     // Dashboards

@@ -31,7 +31,16 @@ export const securityEventsApi = {
    * List security events with filters
    */
   list: (filters?: SecurityEventFilters & { limit?: number; offset?: number }) =>
-    apiClient.get<SecurityEventListResponse>('/security/events', { params: filters as any }),
+    apiClient
+      .get<{
+        data: { data: SecurityEvent[]; total: number };
+        meta?: { summary?: SecurityEventListResponse['summary'] };
+      }>('/security/events', { params: filters as any, envelope: true })
+      .then((body) => ({
+        events: body.data.data,
+        total: body.data.total,
+        summary: body.meta?.summary as SecurityEventListResponse['summary'],
+      })),
 
   /**
    * Get security event by ID

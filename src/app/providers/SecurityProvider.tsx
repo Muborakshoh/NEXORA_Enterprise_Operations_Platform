@@ -4,7 +4,7 @@
  * Context provider for Security module state management.
  */
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react';
 import { 
   securityEventsApi, 
   auditLogApi, 
@@ -168,7 +168,7 @@ export function SecurityProvider({ children }: SecurityProviderProps) {
   const [isLoadingRules, setIsLoadingRules] = useState(false);
 
   // Security Events methods
-  const loadSecurityEvents = async (filters?: SecurityEventFilters) => {
+  const loadSecurityEvents = useCallback(async (filters?: SecurityEventFilters) => {
     setIsLoadingEvents(true);
     try {
       const response = await securityEventsApi.list(filters);
@@ -178,7 +178,7 @@ export function SecurityProvider({ children }: SecurityProviderProps) {
     } finally {
       setIsLoadingEvents(false);
     }
-  };
+  }, []);
 
   const acknowledgeEvent = async (eventId: string) => {
     const event = await securityEventsApi.acknowledge(eventId);
@@ -196,7 +196,7 @@ export function SecurityProvider({ children }: SecurityProviderProps) {
   };
 
   // Audit Logs methods
-  const loadAuditLogs = async (filters?: AuditLogFilters) => {
+  const loadAuditLogs = useCallback(async (filters?: AuditLogFilters) => {
     setIsLoadingLogs(true);
     try {
       const response = await auditLogApi.list(filters);
@@ -206,14 +206,14 @@ export function SecurityProvider({ children }: SecurityProviderProps) {
     } finally {
       setIsLoadingLogs(false);
     }
-  };
+  }, []);
 
   const exportAuditLogs = async (filters?: AuditLogFilters, format: 'csv' | 'json' = 'csv') => {
     return await auditLogApi.export(filters, format);
   };
 
   // Sessions methods
-  const loadSessions = async (filters?: UserSessionFilters) => {
+  const loadSessions = useCallback(async (filters?: UserSessionFilters) => {
     setIsLoadingSessions(true);
     try {
       const response = await sessionsApi.list(filters);
@@ -223,7 +223,7 @@ export function SecurityProvider({ children }: SecurityProviderProps) {
     } finally {
       setIsLoadingSessions(false);
     }
-  };
+  }, []);
 
   const revokeSession = async (sessionId: string) => {
     await sessionsApi.revoke(sessionId);
@@ -238,7 +238,7 @@ export function SecurityProvider({ children }: SecurityProviderProps) {
   };
 
   // Suspicious Activity methods
-  const loadSuspiciousActivities = async (filters?: SuspiciousActivityFilters) => {
+  const loadSuspiciousActivities = useCallback(async (filters?: SuspiciousActivityFilters) => {
     setIsLoadingSuspicious(true);
     try {
       const response = await suspiciousActivityApi.list(filters);
@@ -248,7 +248,7 @@ export function SecurityProvider({ children }: SecurityProviderProps) {
     } finally {
       setIsLoadingSuspicious(false);
     }
-  };
+  }, []);
 
   const startInvestigation = async (activityId: string) => {
     const activity = await suspiciousActivityApi.startInvestigation(activityId);
@@ -271,7 +271,7 @@ export function SecurityProvider({ children }: SecurityProviderProps) {
   };
 
   // Statistics methods
-  const loadSecurityStats = async () => {
+  const loadSecurityStats = useCallback(async () => {
     setIsLoadingStats(true);
     try {
       const stats = await securityStatsApi.get();
@@ -279,10 +279,10 @@ export function SecurityProvider({ children }: SecurityProviderProps) {
     } finally {
       setIsLoadingStats(false);
     }
-  };
+  }, []);
 
   // Security Rules methods
-  const loadSecurityRules = async () => {
+  const loadSecurityRules = useCallback(async () => {
     setIsLoadingRules(true);
     try {
       const response = await securityRulesApi.list();
@@ -291,7 +291,7 @@ export function SecurityProvider({ children }: SecurityProviderProps) {
     } finally {
       setIsLoadingRules(false);
     }
-  };
+  }, []);
 
   const createSecurityRule = async (rule: Omit<SecurityRule, 'id' | 'organization_id' | 'created_at' | 'updated_at'>) => {
     const newRule = await securityRulesApi.create(rule);

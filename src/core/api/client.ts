@@ -54,11 +54,18 @@ class TokenManager {
     localStorage.setItem(config.refreshTokenStorageKey, refresh);
   }
 
+  setAccessToken(access: string): void {
+    this.accessToken = access;
+    localStorage.setItem(config.tokenStorageKey, access);
+    localStorage.setItem('nexora_last_activity', String(Date.now()));
+  }
+
   clearTokens(): void {
     this.accessToken = null;
     this.refreshToken = null;
     localStorage.removeItem(config.tokenStorageKey);
     localStorage.removeItem(config.refreshTokenStorageKey);
+    localStorage.removeItem('nexora_last_activity');
   }
 
   isAuthenticated(): boolean {
@@ -77,6 +84,8 @@ interface RequestOptions {
   headers?: Record<string, string>;
   signal?: AbortSignal;
   responseType?: 'json' | 'blob' | 'text';
+  /** true: вернуть весь ответ ({ success, data, meta }), а не только data */
+  envelope?: boolean;
 }
 
 class ApiClient {
@@ -138,14 +147,18 @@ class ApiClient {
 
     if (response.status === 401) {
       tokenManager.clearTokens();
+      localStorage.removeItem('nexora_user');
+      if (!['/login', '/register'].includes(window.location.pathname)) {
+        window.location.assign('/login');
+      }
       throw new UnauthorizedError();
     }
 
     throw new ApiClientError(
-      errorData?.error?.code || 'UNKNOWN_ERROR',
-      errorData?.error?.message || response.statusText || 'An unexpected error occurred',
+      errorData?.error?.code || (response.status === 422 ? 'VALIDATION_ERROR' : 'UNKNOWN_ERROR'),
+      errorData?.error?.message || errorData?.message || response.statusText || 'An unexpected error occurred',
       response.status,
-      errorData?.error?.details,
+      errorData?.error?.details || errorData?.errors,
     );
   }
 
@@ -185,7 +198,7 @@ class ApiClient {
         return await response.text() as any;
       } else {
         const result = await response.json();
-        return result.data;
+        return options?.envelope ? result : result.data;
       }
     } catch (error) {
       clearTimeout(timeoutId);
@@ -225,3 +238,14 @@ class ApiClient {
 }
 
 export const apiClient = new ApiClient();
+
+export function getErrorMessage(err: unknown): string {
+  if (err instanceof ApiClientError) {
+    const first = err.details ? Object.values(err.details)[0]?.[0] : undefined;
+    return first || err.message;
+  }
+  if (err instanceof NetworkError) {
+    return err.message;
+  }
+  return 'Something went wrong. Please try again.';
+}
