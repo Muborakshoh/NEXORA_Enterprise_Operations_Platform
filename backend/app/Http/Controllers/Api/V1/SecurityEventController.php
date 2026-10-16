@@ -29,13 +29,13 @@ class SecurityEventController extends Controller
         if ($request->has('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                    ->orWhere('description', 'like', "%{$search}%");
+                $q->where('title', 'ilike', "%{$search}%")
+                    ->orWhere('description', 'ilike', "%{$search}%");
             });
         }
 
         $events = $query->orderBy('created_at', 'desc')
-            ->paginate($request->get('per_page', 20));
+            ->paginate(min(max((int) $request->get('per_page', 20), 1), 100));
 
         $summary = [
             'total' => SecurityEvent::where('organization_id', $request->user()->organization_id)->count(),

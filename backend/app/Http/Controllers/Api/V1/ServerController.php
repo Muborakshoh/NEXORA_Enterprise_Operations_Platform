@@ -25,14 +25,14 @@ class ServerController extends Controller
         if ($request->has('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('hostname', 'like', "%{$search}%")
-                    ->orWhere('ip_address', 'like', "%{$search}%");
+                $q->where('name', 'ilike', "%{$search}%")
+                    ->orWhere('hostname', 'ilike', "%{$search}%")
+                    ->orWhere('ip_address', 'ilike', "%{$search}%");
             });
         }
 
         $servers = $query->orderBy('created_at', 'desc')
-            ->paginate($request->get('per_page', 20));
+            ->paginate(min(max((int) $request->get('per_page', 20), 1), 100));
 
         $summary = [
             'total' => Server::where('organization_id', $request->user()->organization_id)->count(),

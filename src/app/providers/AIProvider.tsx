@@ -4,7 +4,7 @@
  * Context provider for AI module state management.
  */
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, type ReactNode, useCallback } from 'react';
 import { 
   assistantsApi, 
   toolsApi, 
@@ -197,7 +197,7 @@ export function AIProvider({ children }: AIProviderProps) {
   const [isLoadingStats, setIsLoadingStats] = useState(false);
 
   // Assistants methods
-  const loadAssistants = async (filters?: AssistantFilters) => {
+  const loadAssistants = useCallback(async (filters?: AssistantFilters) => {
     setIsLoadingAssistants(true);
     try {
       const response = await assistantsApi.list(filters);
@@ -206,7 +206,7 @@ export function AIProvider({ children }: AIProviderProps) {
     } finally {
       setIsLoadingAssistants(false);
     }
-  };
+  }, []);
 
   const createAssistant = async (data: CreateAssistantRequest) => {
     const assistant = await assistantsApi.create(data);
@@ -232,7 +232,7 @@ export function AIProvider({ children }: AIProviderProps) {
   };
 
   // Tools methods
-  const loadTools = async (filters?: ToolFilters) => {
+  const loadTools = useCallback(async (filters?: ToolFilters) => {
     setIsLoadingTools(true);
     try {
       const response = await toolsApi.list(filters);
@@ -241,7 +241,7 @@ export function AIProvider({ children }: AIProviderProps) {
     } finally {
       setIsLoadingTools(false);
     }
-  };
+  }, []);
 
   const createTool = async (data: CreateToolRequest) => {
     const tool = await toolsApi.create(data);
@@ -267,7 +267,7 @@ export function AIProvider({ children }: AIProviderProps) {
   };
 
   // Analytics methods
-  const loadAnalytics = async (filters?: AnalyticsFilters) => {
+  const loadAnalytics = useCallback(async (filters?: AnalyticsFilters) => {
     setIsLoadingAnalytics(true);
     try {
       const response = await aiAnalyticsApi.list(filters);
@@ -276,7 +276,7 @@ export function AIProvider({ children }: AIProviderProps) {
     } finally {
       setIsLoadingAnalytics(false);
     }
-  };
+  }, []);
 
   const createAnalytics = async (data: CreateAnalyticsRequest) => {
     const analytics = await aiAnalyticsApi.create(data);
@@ -302,7 +302,7 @@ export function AIProvider({ children }: AIProviderProps) {
   };
 
   // Detectors methods
-  const loadDetectors = async (filters?: AnomalyDetectorFilters) => {
+  const loadDetectors = useCallback(async (filters?: AnomalyDetectorFilters) => {
     setIsLoadingDetectors(true);
     try {
       const response = await anomalyApi.listDetectors(filters);
@@ -311,7 +311,7 @@ export function AIProvider({ children }: AIProviderProps) {
     } finally {
       setIsLoadingDetectors(false);
     }
-  };
+  }, []);
 
   const createDetector = async (data: CreateAnomalyDetectorRequest) => {
     const detector = await anomalyApi.createDetector(data);
@@ -339,7 +339,7 @@ export function AIProvider({ children }: AIProviderProps) {
   };
 
   // Anomalies methods
-  const loadAnomalies = async (filters?: AnomalyFilters) => {
+  const loadAnomalies = useCallback(async (filters?: AnomalyFilters) => {
     setIsLoadingAnomalies(true);
     try {
       const response = await anomalyApi.listAnomalies(filters);
@@ -349,7 +349,7 @@ export function AIProvider({ children }: AIProviderProps) {
     } finally {
       setIsLoadingAnomalies(false);
     }
-  };
+  }, []);
 
   const updateAnomalyStatus = async (id: string, status: string) => {
     const anomaly = await anomalyApi.updateAnomalyStatus(id, status);
@@ -364,7 +364,7 @@ export function AIProvider({ children }: AIProviderProps) {
   };
 
   // Recommendations methods
-  const loadRecommendations = async (filters?: RecommendationFilters) => {
+  const loadRecommendations = useCallback(async (filters?: RecommendationFilters) => {
     setIsLoadingRecommendations(true);
     try {
       const response = await recommendationsApi.list(filters);
@@ -374,7 +374,7 @@ export function AIProvider({ children }: AIProviderProps) {
     } finally {
       setIsLoadingRecommendations(false);
     }
-  };
+  }, []);
 
   const acceptRecommendation = async (id: string) => {
     const recommendation = await recommendationsApi.accept(id);
@@ -399,7 +399,7 @@ export function AIProvider({ children }: AIProviderProps) {
   };
 
   // Statistics methods
-  const loadAIStats = async () => {
+  const loadAIStats = useCallback(async () => {
     setIsLoadingStats(true);
     try {
       const stats = await aiStatsApi.get();
@@ -407,7 +407,7 @@ export function AIProvider({ children }: AIProviderProps) {
     } finally {
       setIsLoadingStats(false);
     }
-  };
+  }, []);
 
   const value: AIContextType = {
     // Assistants

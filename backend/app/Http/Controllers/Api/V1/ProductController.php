@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
@@ -21,13 +22,13 @@ class ProductController extends Controller
         if ($request->has('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('sku', 'like', "%{$search}%");
+                $q->where('name', 'ilike', "%{$search}%")
+                    ->orWhere('sku', 'ilike', "%{$search}%");
             });
         }
 
         $products = $query->orderBy('created_at', 'desc')
-            ->paginate($request->get('per_page', 20));
+            ->paginate(min(max((int) $request->get('per_page', 20), 1), 100));
 
         return response()->json([
             'success' => true,
@@ -41,7 +42,7 @@ class ProductController extends Controller
             'sku' => 'required|string|max:100|unique:products,sku',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'category_id' => 'nullable|uuid|exists:product_categories,id',
+            'category_id' => ['nullable', 'uuid', Rule::exists('product_categories', 'id')->where('organization_id', $request->user()->organization_id)],
             'unit' => 'nullable|string|max:50',
             'cost_price' => 'required|numeric|min:0',
             'selling_price' => 'required|numeric|min:0',
@@ -81,7 +82,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'name' => 'sometimes|string|max:255',
             'description' => 'nullable|string',
-            'category_id' => 'nullable|uuid|exists:product_categories,id',
+            'category_id' => ['nullable', 'uuid', Rule::exists('product_categories', 'id')->where('organization_id', $request->user()->organization_id)],
             'unit' => 'nullable|string|max:50',
             'cost_price' => 'sometimes|numeric|min:0',
             'selling_price' => 'sometimes|numeric|min:0',

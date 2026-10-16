@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Services\SecurityLogger;
 
 class AuthController extends Controller
 {
@@ -39,7 +40,9 @@ class AuthController extends Controller
         ]);
 
         // Create token
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $newToken = $user->createToken('auth_token');
+        $token = $newToken->plainTextToken;
+        SecurityLogger::signedIn($user, (string) $newToken->accessToken->id, $request);
 
         return response()->json([
             'success' => true,
@@ -63,6 +66,9 @@ class AuthController extends Controller
         $user = User::where('email', $validated['email'])->first();
 
         if (!$user || !Hash::check($validated['password'], $user->password)) {
+            if ($user) {
+                SecurityLogger::loginFailed($user, $request);
+            }
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
@@ -72,7 +78,9 @@ class AuthController extends Controller
         $user->update(['last_login_at' => now()]);
 
         // Create token
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $newToken = $user->createToken('auth_token');
+        $token = $newToken->plainTextToken;
+        SecurityLogger::signedIn($user, (string) $newToken->accessToken->id, $request);
 
         return response()->json([
             'success' => true,
@@ -88,7 +96,9 @@ class AuthController extends Controller
      */
     public function logout(Request $request): JsonResponse
     {
-        $request->user()->currentAccessToken()->delete();
+        $currentToken = $request->user()->currentAccessToken();
+        SecurityLogger::signedOut($request->user(), (string) $currentToken->id, $request);
+        $currentToken->delete();
 
         return response()->json([
             'success' => true,

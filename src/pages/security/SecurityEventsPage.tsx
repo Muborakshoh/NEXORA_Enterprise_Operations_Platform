@@ -57,9 +57,9 @@ export function SecurityEventsPage() {
 
   const filteredEvents = securityEvents.filter(event => {
     const matchesSearch = 
-      event.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      event.ip_address.includes(searchQuery);
+      (event.title ?? '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (event.description ?? '').toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (event.ip_address ?? '').includes(searchQuery);
     
     const matchesSeverity = !severityFilter || event.severity === severityFilter;
     const matchesStatus = !statusFilter || event.status === statusFilter;

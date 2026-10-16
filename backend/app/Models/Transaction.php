@@ -25,6 +25,7 @@ class Transaction extends Model
         'tags',
         'metadata',
         'created_by',
+        'idempotency_key',
     ];
 
     protected function casts(): array
