@@ -18,13 +18,6 @@ yarn-error.log*
 # Laravel
 backend/vendor/
 
-backend/storage/*
-backend/storage/**/
-backend/storage/**/.gitignore
-
-backend/bootstrap/cache/*
-backend/bootstrap/cache/.gitignore
-
 # Temporary Laravel project
 laravel-temp/
 
@@ -40,3 +33,5 @@ backend.backup/
 # OS
 .DS_Store
 Thumbs.db
+backend/.env
+*.bak*
