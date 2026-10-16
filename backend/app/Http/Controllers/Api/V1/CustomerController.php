@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CustomerController extends Controller
 {
@@ -25,14 +26,14 @@ class CustomerController extends Controller
         if ($request->has('search')) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('company', 'like', "%{$search}%");
+                $q->where('name', 'ilike', "%{$search}%")
+                    ->orWhere('email', 'ilike', "%{$search}%")
+                    ->orWhere('company', 'ilike', "%{$search}%");
             });
         }
 
         $customers = $query->orderBy('created_at', 'desc')
-            ->paginate($request->get('per_page', 20));
+            ->paginate(min(max((int) $request->get('per_page', 20), 1), 100));
 
         return response()->json([
             'success' => true,
@@ -54,7 +55,7 @@ class CustomerController extends Controller
             'status' => 'nullable|string|in:active,inactive,prospect,churned',
             'tags' => 'nullable|array',
             'metadata' => 'nullable|array',
-            'assigned_to' => 'nullable|uuid|exists:users,id',
+            'assigned_to' => ['nullable', 'uuid', Rule::exists('users', 'id')->where('organization_id', $request->user()->organization_id)],
         ]);
 
         $validated['organization_id'] = $request->user()->organization_id;
@@ -100,7 +101,7 @@ class CustomerController extends Controller
             'status' => 'nullable|string|in:active,inactive,prospect,churned',
             'tags' => 'nullable|array',
             'metadata' => 'nullable|array',
-            'assigned_to' => 'nullable|uuid|exists:users,id',
+            'assigned_to' => ['nullable', 'uuid', Rule::exists('users', 'id')->where('organization_id', $request->user()->organization_id)],
         ]);
 
         $customer->update($validated);
