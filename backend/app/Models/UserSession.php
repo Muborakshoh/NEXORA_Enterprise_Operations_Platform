@@ -23,7 +23,10 @@ class UserSession extends Model
         'is_active',
         'last_active_at',
         'expires_at',
+        'token_id',
     ];
+
+    protected $hidden = ['token_id'];
 
     protected function casts(): array
     {
