@@ -158,7 +158,7 @@ export const exportsApi = {
    * Download export file
    */
   download: (exportId: string) =>
-    apiClient.get<Blob>(`/analytics/exports/${exportId}/download`),
+    apiClient.get<Blob>(`/analytics/exports/${exportId}/download`, { responseType: 'blob' }),
 
   /**
    * Get export status
