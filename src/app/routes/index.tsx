@@ -19,6 +19,7 @@ import { ReportsPage } from '../../pages/analytics/ReportsPage';
 import { ExportsPage } from '../../pages/analytics/ExportsPage';
 import { AggregationsPage } from '../../pages/analytics/AggregationsPage';
 import { AIAssistantChatPage } from '../../pages/ai/AIAssistantChatPage';
+import { AIAssistantsPage } from '../../pages/ai/AIAssistantsPage';
 import { AIToolsPage } from '../../pages/ai/AIToolsPage';
 import { AIAnalyticsPage } from '../../pages/ai/AIAnalyticsPage';
 import { AnomalyDetectionPage } from '../../pages/ai/AnomalyDetectionPage';
@@ -153,6 +154,14 @@ export const router = createBrowserRouter([
         ),
       },
       // AI (protected)
+      {
+        path: '/ai/assistants',
+        element: (
+          <ProtectedRoute>
+            <AIAssistantsPage />
+          </ProtectedRoute>
+        ),
+      },
       {
         path: '/ai/assistant',
         element: (

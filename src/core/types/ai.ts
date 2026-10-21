@@ -84,6 +84,8 @@ export interface CreateAssistantRequest {
   description?: string;
   model: AIModel;
   capabilities: AICapability[];
+  api_key?: string;
+  provider?: 'groq' | 'gemini' | 'custom';
   config?: Partial<AssistantConfig>;
 }
 

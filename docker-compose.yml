@@ -1,12 +1,33 @@
-version: '3.8'
 
 services:
+  # Frontend (Vite + React, режим разработки)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: nexora-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - VITE_PROXY_TARGET=http://nginx:80
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - nexora-network
+    depends_on:
+      - nginx
+
   # PHP Application
   app:
     build:
       context: ./backend
       dockerfile: Dockerfile
     container_name: nexora-app
+    group_add:
+      - "1000"
     restart: unless-stopped
     working_dir: /var/www
     volumes:

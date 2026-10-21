@@ -1,6 +1,6 @@
 /**
  * AI Analytics Page
- * 
+ *
  * Manage AI-powered analytics and insights.
  */
 
@@ -58,7 +58,7 @@ export function AIAnalyticsPage() {
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this analytics?')) return;
-    
+
     try {
       await deleteAnalytics(id);
     } catch (error) {
@@ -121,8 +121,8 @@ export function AIAnalyticsPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredAnalytics.map(item => (
-            <AnalyticsCard 
-              key={item.id} 
+            <AnalyticsCard
+              key={item.id}
               analytics={item}
               onDelete={() => handleDelete(item.id)}
               onRun={() => handleRun(item.id)}
@@ -176,10 +176,16 @@ export function AIAnalyticsPage() {
           </div>
           <Input
             label="Data Source"
+            value={formData.data_source}
+            onChange={(e) => setFormData({ ...formData, data_source: e.target.value })}
+            placeholder="sales_metrics"
+          />
+          <Input
+            label="Metrics (comma separated)"
             value={formData.query.metrics.join(', ')}
-            onChange={(e) => setFormData({ 
-              ...formData, 
-              query: { ...formData.query, metrics: e.target.value.split(',').map(m => m.trim()) }
+            onChange={(e) => setFormData({
+              ...formData,
+              query: { ...formData.query, metrics: e.target.value.split(',').map(m => m.trim()).filter(Boolean) }
             })}
             placeholder="revenue, customers, orders"
           />
