@@ -198,7 +198,7 @@ class ApiClient {
         return await response.text() as any;
       } else {
         const result = await response.json();
-        return options?.envelope ? result : result.data;
+        return options?.envelope ? result : (result.data ?? result);
       }
     } catch (error) {
       clearTimeout(timeoutId);
